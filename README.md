@@ -55,7 +55,20 @@ Reference data lives in constants near the top of the script: `STATUSES`, `PROJE
 
 ## Deployment
 
-On every push to `main`, [`.github/workflows/pages.yml`](.github/workflows/pages.yml) deploys the repository root to GitHub Pages. It can also be run by hand with `workflow_dispatch`.
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml) runs on GitHub Actions:
+
+- **`check`** runs on every push, pull request and manual dispatch. It scans the full git history for secrets with gitleaks, fails if `index.html` is missing, and fails if `FORMSUBMIT_ENDPOINT` no longer uses the placeholder address (so a real address can't reach the public site by accident).
+- **`deploy`** runs after `check` passes on a push to `main` or a manual `workflow_dispatch`. It copies only the public site files (`index.html` and `docs/`) into `_site/` and publishes that to GitHub Pages. `CLAUDE.md`, `.github/` and other repo files are not deployed.
+
+## Project structure
+
+```
+index.html                     The whole app: HTML, CSS and JS
+docs/screenshot.png            Screenshot used in this README
+.github/workflows/pages.yml    CI checks and GitHub Pages deploy
+CLAUDE.md                      Architecture notes for AI coding assistants
+README.md                      This file
+```
 
 ## Contributing notes
 

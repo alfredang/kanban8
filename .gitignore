@@ -11,6 +11,9 @@ id_rsa*
 .npmrc
 .netrc
 
+# Dependencies
+node_modules/
+
 # Local tooling output
 .playwright-mcp/
 .claude/settings.local.json
